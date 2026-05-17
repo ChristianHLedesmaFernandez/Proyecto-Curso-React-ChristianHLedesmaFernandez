@@ -1,0 +1,79 @@
+/* CARD GENERAL */
+.producto-card {
+    transition: all 0.3s ease;
+    background: #fff;
+}
+
+.producto-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* IMAGEN */
+.producto-card img {
+    transition: transform 0.35s ease;
+}
+
+.producto-card:hover img {
+    transform: scale(1.05);
+}
+
+/* FAVORITO */
+.producto-card .favorito-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+    transition: all 0.2s ease;
+}
+
+.producto-card .favorito-btn:hover {
+    transform: scale(1.12);
+    background: white;
+}
+
+/* BADGE */
+.producto-card .badge {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+/* TITULO */
+.producto-card .card-title {
+    min-height: 50px;
+}
+
+/* PRECIO */
+.producto-card h3 {
+    color: #212529;
+}
+
+/* BOTÓN COMPRAR */
+.producto-card .btn-primary {
+    transition: all 0.25s ease;
+    border: none;
+    padding: 10px;
+}
+
+.producto-card .btn-primary:hover {
+    transform: scale(1.03);
+    background-color: #0b5ed7;
+}
+
+/* STOCK */
+.producto-card small {
+    display: block;
+    margin-bottom: 12px;
+}
+
+.contador-flecha {
+    font-size: 1.5rem; /* tamaño */
+    cursor: pointer;
+    transition: all 0.2s ease;
+}

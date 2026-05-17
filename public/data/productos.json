@@ -1,0 +1,106 @@
+[
+        {
+                "id": 1234,
+                "nombre": "Notebook Pro",
+                "imagen": "/imagenes/notebookPro.webp",
+                "precio": 1200000,
+                "descuento": 5,
+                "stock": 15
+        },
+        {
+                "id": 2344,
+                "nombre": "Monitor Curvo",
+                "imagen": "/imagenes/monitorCurvo.webp",
+                "precio": 450000,
+                "descuento": 15,
+                "stock": 25
+        },
+        {
+                "id": 2545,
+                "nombre": "Teclado Mecánico",
+                "imagen": "/imagenes/teclado.webp",
+                "precio": 150000,                
+                "descuento": 20,
+                "stock": 50
+        },
+        {
+                "id": 3123,
+                "nombre": "Mouse Gamer RGB",
+                "imagen": "/imagenes/mouseRgb.webp",
+                "precio": 85000,                
+                "descuento": 5,
+                "stock": 40
+        },
+        {
+                "id": 4123,
+                "nombre": "Auriculares Bluetooth",
+                "imagen": "/imagenes/auriculares.webp",
+                "precio": 210000,
+                "descuento": 5,
+                "stock": 18
+        },
+        {
+                "id": 5234,
+                "nombre": "Silla Ergonómica",
+                "imagen": "/imagenes/sillaErgonomica.webp",
+                "precio": 780000,
+                "descuento": 10,
+                "stock": 8
+        },
+        {
+                "id": 6345,
+                "nombre": "Webcam HD",
+                "imagen": "/imagenes/webcamHD.webp",
+                "precio": 95000,                
+                "descuento": 25,
+                "stock": 30
+        },
+        {
+                "id": 7456,
+                "nombre": "Disco SSD 1TB",
+                "imagen": "/imagenes/discoSSD.webp",
+                "precio": 175000,
+                "descuento": 15,
+                "stock": 22
+        },
+        {
+                "id": 8567,
+                "nombre": "Memoria RAM 16GB",
+                "imagen": "/imagenes/memoriaRam.webp",
+                "precio": 132000,                
+                "descuento": 12,
+                "stock": 35
+        },
+        {
+                "id": 9678,
+                "nombre": "Impresora Multifunción",
+                "imagen": "/imagenes/impresora.webp",
+                "precio": 390000,
+                "descuento": 10,                
+                "stock": 12
+        },
+        {
+                "id": 1078,
+                "nombre": "Tablet Android",
+                "imagen": "/imagenes/tabletAndroid.webp",
+                "precio": 560000,                
+                "descuento": 5,
+                "stock": 14
+        },
+        {
+                "id": 1189,
+                "nombre": "Smartwatch Fit",
+                "imagen": "/imagenes/smartwatch.webp",
+                "precio": 199000,                
+                "descuento": 30,
+                "stock": 27
+        },
+        {
+                "id": 1290,
+                "nombre": "Parlante Portátil",
+                "imagen": "/imagenes/parlantePortatil.webp",
+                "precio": 143000,
+                "descuento": 25,
+                "stock": 19
+        }
+]
