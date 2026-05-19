@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 
 import { Navbar, Nav, Container, Badge } from "react-bootstrap";
 import { Cart } from "react-bootstrap-icons";
+import "./header/NavBar.css";
 
 function NavBar() {
 
@@ -22,21 +23,21 @@ function NavBar() {
 
                         {/* carrito */}
                         <Nav.Link className="position-relative ms-3">
-                            <Cart size={25} />
-                            <Badge
-                                pill
-                                bg="danger"
-                                className="
-                                    position-absolute
-                                    top-0
-                                    start-100
-                                    translate-middle
-                                "
-                            >
-                                {cantidadCarrito}
-                            </Badge>
+                            <div className="carrito-container">
+                                <Cart size={25} />
+                                <Badge
+                                    pill
+                                    bg="danger"
+                                    className="
+                                        position-absolute
+                                        top-0
+                                        start-100
+                                        translate-middle"
+                                >
+                                    {cantidadCarrito}
+                                </Badge>
+                            </div>
                         </Nav.Link>
-
                     </Nav>
                 </Navbar.Collapse>
             </Container>

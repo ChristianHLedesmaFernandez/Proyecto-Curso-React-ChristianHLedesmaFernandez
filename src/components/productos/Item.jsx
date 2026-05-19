@@ -1,19 +1,26 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Contador } from "../Contador/Contador";
-import { Row, Col, Card, Button, Badge } from "react-bootstrap";
-import { Heart, HeartFill, Star, StarFill } from "react-bootstrap-icons";
+import { Card, Button, Badge } from "react-bootstrap";
+import { Heart, HeartFill } from "react-bootstrap-icons";
 import "./Item.css";
 
-function Item({ nombre, imagen, descripcion, precio, descuento, stock }) {
+function Item({ id, nombre, imagen, descripcion, precio, descuento, stock }) {
 
     const [esFavorito, setEsFavorito] = useState(false);
+    const navigate = useNavigate();
 
-    const CompraClick = () => {
+    const CompraClick = (e) => {
+        
+        e.preventDefault();
+        e.stopPropagation();
         // Quiero que se ejecute cuando le doy clic
         alert(`¡Agregaste ${nombre} al chango!`);
     };
 
-    const marcarComoFavorito = () => {
+    const marcarComoFavorito = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         setEsFavorito(!esFavorito)
     }
 
@@ -22,65 +29,67 @@ function Item({ nombre, imagen, descripcion, precio, descuento, stock }) {
         : "imagenes/imagenNoDisponible.jpg";
 
     return (
-        <Card className="h-100 shadow-sm border-0 rounded-4 overflow-hidden producto-card">
-            {/*Imagen */}
-            <div className="position-relative bg-light">
-                <Card.Img
-                    variant="top"
-                    src={imagen}
-                    style={{
-                        height: "230px",
-                        objectFit: "cover"
-                    }}
-                />
-                {/* Favorito */}
-                <div className="favorito-btn"
-                    onClick={() => setEsFavorito(!esFavorito)}
-                >
-                    {
-                        esFavorito
-                            ? <HeartFill className="text-warning" />
-                            : <Heart className="text-warning" />
-                    }
-                </div>
-                {/* Badge descuento */}
-                <Badge
-                    bg="warning"
-                    text="dark"
-                    className="position-absolute bottom-0 start-0 m-2"
-                >
-                    {descuento} % OFF
-                </Badge>
+            <Card className="h-100 shadow-sm border-0 rounded-4 overflow-hidden producto-card" onClick={() => navigate(`/producto/${id}`)}>
+                {/*Imagen */}
+                <div className="position-relative bg-light">
+                    <Card.Img
+                        variant="top"
+                        src={imagenFinal}
+                        style={{
+                            height: "230px",
+                            objectFit: "cover"
+                        }}
+                    />
+                    {/* Favorito */}
+                    <div className="favorito-btn"
+                        onClick={marcarComoFavorito }
+                    >
+                        {
+                            esFavorito
+                                ? <HeartFill className="text-warning" />
+                                : <Heart className="text-warning" />
+                        }
+                    </div>
+                    {/* Badge descuento */}
+                    {descuento > 0 && (
+                        <Badge
+                            bg="warning"
+                            text="dark"
+                            className="position-absolute bottom-0 start-0 m-2"
+                        >
+                            {descuento} % OFF
+                        </Badge>
+                    )}
 
-            </div>
-            <Card.Body>
-                {/* Nombre */}
-                <Card.Title
-                    className="fw-bold mb-1"
-                    style={{ fontSize: "1.3rem" }}
-                >
-                    {nombre}
-                </Card.Title>
-                {/* Precio */}
-                <h3 className="fw-bold text-dark mb-1">
-                    ${precio}
-                </h3>
-                {/* Stock */}
-                <small className="text-muted mb-3">
-                    Stock: {stock}
-                </small>
-                {/* Contador */}
-                <Contador stock={stock} />
-                {/* Botón comprar */}
-                <Button
-                    variant="primary"
-                    className="w-100 rounded-pill fw-bold"
-                    onClick={CompraClick}
-                >
-                    Comprar
-                </Button>
-            </Card.Body>
-        </Card>
+                </div>
+                <Card.Body>
+                    {/* Nombre */}
+                    <Card.Title
+                        className="fw-bold mb-1"
+                        style={{ fontSize: "1.3rem" }}
+                    >
+                        {nombre}
+                    </Card.Title>
+                    {/* Precio */}
+                    <h3 className="fw-bold text-dark mb-1">
+                        ${precio}
+                    </h3>
+                    {/* Stock */}
+                    <small className="text-muted mb-3">
+                        Stock: {stock}
+                    </small>
+                    {/* Contador */}
+                    <Contador stock={stock} />
+                    {/* Botón comprar */}
+                    <Button
+                        variant="primary"
+                        className="w-100 rounded-pill fw-bold"
+                        onClick={CompraClick}
+                    >
+                        Comprar
+                    </Button>
+                </Card.Body>
+            </Card>
     );
 }
 

@@ -6,6 +6,7 @@ import Layout from './components/layout/Layout';
 import Inicio from "./components/pages/Inicio";
 import Contactos from "./components/contactos/Contacto";
 import ProductosContainer from "./components/productos/ProductosContainer";
+import ProductoDetalle from "./components/productos/ProductoDetalle";
 import Directorio from "./components/equipo/Directorio";
 
 function App() {
@@ -26,6 +27,9 @@ function App() {
 
         <Route
           path="/contacto" element={<Contactos />}/>
+
+        <Route 
+          path="/producto/:id" element={<ProductoDetalle />} />
 
       </Route>
 
