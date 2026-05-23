@@ -1,8 +1,8 @@
 import { Outlet, useLocation } from 'react-router-dom';
 
 import Header from './header/Header';
+import NavBar from './header/NavBar';
 import Footer from './footer/Footer';
-import NavBar from './NavBar';
 import FooterNosotros from './footer/FooterNosotros';
 
 // Todo lo que pongamos dentro de <Layout> en App.jsx será el "children". 

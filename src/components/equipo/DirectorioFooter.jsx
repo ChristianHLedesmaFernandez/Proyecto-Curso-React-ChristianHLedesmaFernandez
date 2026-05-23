@@ -36,7 +36,6 @@ function DirectorioFooter() {
     return grupos;
   };
 
-
   if (cargando) return <Spinner animation="border" variant="warning" />;
 
   if (error) return <p>Error: {error}</p>;
@@ -58,19 +57,8 @@ function DirectorioFooter() {
           Conoce a las personas que hacen esto posible.
         </p>
       </div>
-      {/* Fin Titulo*/}
-      {/*    Sin Carrusel
-      <Row>
-        {usuarios.slice(0, 3).map(user => (
-          // Col es el que define cuánto espacio ocupa cada tarjeta
-          <Col key={user.id} xs={12} md={6} lg={4}>
-            <TarjetaContacto {...user} />
-          </Col>
-
-        ))}
-      </Row>
-      */}
-      {/* Con Carrusel */}
+      {/* Fin Titulo*/}   
+      {/* Carrusel */}
       <Carousel indicators={true} controls={false} interval={5000} pause="hover">
         {grupos.map((grupo, index) => (
           <Carousel.Item key={index}>

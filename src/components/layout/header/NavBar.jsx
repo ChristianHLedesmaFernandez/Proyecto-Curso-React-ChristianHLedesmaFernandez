@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 import { Navbar, Nav, Container, Badge } from "react-bootstrap";
 import { Cart } from "react-bootstrap-icons";
-import "./header/NavBar.css";
+import "./NavBar.css";
 
 function NavBar() {
 
