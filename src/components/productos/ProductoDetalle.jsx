@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { Container, Card, Row, Col, Spinner, Badge, Button } from 'react-bootstrap';
 
+import { useCarrito } from "../../context/CarritoContext";
+
 const ProductoDetalle = () => {
 
     const [producto, setProducto] = useState(null);
@@ -10,6 +12,9 @@ const ProductoDetalle = () => {
     const [error, setError] = useState(null);
     const { id } = useParams();
     const navigate = useNavigate();
+
+    //Para el carrito
+    const { agregarAlCarrito } = useCarrito();
 
     useEffect(() => {
         fetch('/data/productos.json')
@@ -83,6 +88,17 @@ const ProductoDetalle = () => {
                                 variant="primary"
                                 size="lg"
                                 className="rounded-pill px-4 fw-bold"
+                                onClick={() =>
+                                    agregarAlCarrito({
+                                        id: producto.id,
+                                        nombre: producto.nombre,
+                                        imagen: producto.imagen,
+                                        precio: producto.precio,
+                                        descuento: producto.descuento,
+                                        stock: producto.stock,
+                                        cantidad: 1
+                                    })
+                                }
                             >
                                 Agregar al carrito
                             </Button>

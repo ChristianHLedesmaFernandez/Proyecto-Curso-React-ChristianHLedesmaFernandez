@@ -34,14 +34,15 @@ function Carrito({ show, handleClose }) {
 
     return (
         <Offcanvas show={show} onHide={handleClose} placement='end' style={{ width: "500px" }}>
-            <Offcanvas.Header>
+            <Offcanvas.Header >
                 <Cart size={25} className='text-primary me-3' />
                 <Offcanvas.Title className="fw-bold">Carrito de Compras</Offcanvas.Title>
+                <button className="btn-close d-lg-none" onClick={handleClose}></button>
             </Offcanvas.Header>
             <hr />
-            <Offcanvas.Body className="d-flex flex-column offcanvas-body" id="carrito-container">
+            <Offcanvas.Body className="d-flex flex-column offcanvas-body p-0" id="carrito-container">
 
-                <div className="lista-productos">
+                <div className="lista-productos px-3 pt-3">
                     {/* Lista de Productos */}
                     {carrito.length === 0 ? (
                         <p> Tu Carrito esta Vacio </p>
