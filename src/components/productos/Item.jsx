@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Contador } from "../Contador/Contador";
 import { Card, Button, Badge } from "react-bootstrap";
 import { Heart, HeartFill } from "react-bootstrap-icons";
+
 import "./Item.css";
 
+import { Contador } from "../Contador/Contador";
+import { CarritoContext } from "../../context/CarritoContext";
+
 function Item({ id, nombre, imagen, descripcion, precio, descuento, stock, destacados }) {
+
+    // Para el Carrito de Compras 
+    const { agregarAlCarrito } = useContext(CarritoContext);
+    const [cantidadSeleccionada, setCantidadSeleccionada] = useState(1);
+
 
     const [esFavorito, setEsFavorito] = useState(false);
     const navigate = useNavigate();
@@ -14,8 +22,16 @@ function Item({ id, nombre, imagen, descripcion, precio, descuento, stock, desta
 
         e.preventDefault();
         e.stopPropagation();
-        // Quiero que se ejecute cuando le doy clic
-        alert(`¡Agregaste ${nombre} al chango!`);
+        // Ahora agregamos al carrito
+        agregarAlCarrito({
+                    id,
+                    nombre,
+                    imagen,
+                    cantidad: cantidadSeleccionada,
+                    stock,
+                    descuento,
+                    precio 
+        });
     };
 
     const marcarComoFavorito = (e) => {
@@ -81,14 +97,18 @@ function Item({ id, nombre, imagen, descripcion, precio, descuento, stock, desta
                             Stock: {stock}
                         </small>
                         {/* Contador */}
-                        <Contador stock={stock} />
+                        <Contador 
+                            stock={stock}
+                            cantidad={cantidadSeleccionada}
+                            setCantidad={setCantidadSeleccionada} 
+                        />
                         {/* Botón comprar */}
                         <Button
                             variant="primary"
                             className="w-100 rounded-pill fw-bold"
                             onClick={CompraClick}
                         >
-                            Comprar
+                            Agregar al Carrito
                         </Button>
                     </>
                 )};

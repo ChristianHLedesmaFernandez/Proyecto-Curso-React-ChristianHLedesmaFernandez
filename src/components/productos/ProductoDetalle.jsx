@@ -29,16 +29,13 @@ const ProductoDetalle = () => {
             });
     }, [id]);
 
-
     if (cargando) return <Spinner animation="border" variant="warning" />;
 
     if (error) return <p>Error: {error}</p>;
 
-
     if (!producto) return <p>Producto no encontrado</p>;
     return (
         <Container className="py-5">
-
             <div
                 className="mb-4 text-primary fw-semibold"
                 style={{ cursor: "pointer" }}
@@ -46,15 +43,10 @@ const ProductoDetalle = () => {
             >
                 ← Volver
             </div>
-
-
             <Card className="border-0 shadow-lg rounded-4 overflow-hidden">
-
                 <Row className="g-0">
-
                     {/* Imagen */}
                     <Col md={6} className="bg-light d-flex align-items-center justify-content-center p-4">
-
                         <img
                             src={producto.imagen}
                             alt={producto.nombre}
@@ -64,14 +56,10 @@ const ProductoDetalle = () => {
                                 objectFit: "contain"
                             }}
                         />
-
                     </Col>
-
                     {/* Información */}
                     <Col md={6}>
-
                         <Card.Body className="p-4 p-lg-5">
-
                             <Badge
                                 bg="warning"
                                 text="dark"
@@ -79,23 +67,18 @@ const ProductoDetalle = () => {
                             >
                                 Detalle del Producto
                             </Badge>
-
                             <h1 className="fw-bold mb-3">
                                 {producto.nombre}
                             </h1>
-
                             <p className="text-muted fs-5">
                                 {producto.descripcion}
                             </p>
-
                             <h2 className="fw-bold text-primary my-4">
                                 ${producto.precio}
                             </h2>
-
                             <p className="mb-4">
                                 <strong>Stock disponible:</strong> {producto.stock}
                             </p>
-
                             <Button
                                 variant="primary"
                                 size="lg"
@@ -103,16 +86,12 @@ const ProductoDetalle = () => {
                             >
                                 Agregar al carrito
                             </Button>
-
                         </Card.Body>
-
                     </Col>
-
                 </Row>
-
             </Card>
-
         </Container>
     );
 };
+
 export default ProductoDetalle;

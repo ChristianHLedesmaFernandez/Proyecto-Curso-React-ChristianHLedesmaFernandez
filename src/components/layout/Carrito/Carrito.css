@@ -1,0 +1,95 @@
+#carrito-container {
+    overflow-y: auto;
+}
+.img-carrito {
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+.botones{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3px;
+}
+
+.botones button{
+    background-color: #0d6efd;
+    height: 60px;
+    cursor: pointer;
+    border: none;
+}
+.botones button:hover{
+    color: black;
+    background-color: green;
+    
+    height: 60px;
+    cursor: pointer;
+}
+#vaciar-carrito:hover{
+    color: white;
+    background-color: red;
+    height: 60px;
+    cursor: pointer;
+}
+.item {
+    display: grid;
+    grid-template-columns: 25px 60px 1fr 90px 85px;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+}
+.totales p {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+    gap: 5px;
+}
+hr {    
+    width: 450px;
+    margin: auto;
+    border: none; 
+    border-top: 3px solid #0d6efd;
+}
+.nombre{
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+.precio{
+    font-size: 1rem;
+    font-weight: 500;
+}
+#descuento {
+    color: rgb(4, 248, 4);
+}
+#total {
+    font-size: 25px;
+}
+#iva {
+    color: red;
+    margin-top: 15px;
+}
+.cantidad {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    justify-items: center;
+}
+
+.contador-flecha {
+    transition: 0.2s;
+    cursor: pointer;
+}
+.contador-flecha:hover {
+    transform: scale(1.15);
+}
+.lista-productos {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+.footer-carrito {
+    border-top: 1px solid #ddd;
+    background-color: white;
+    padding-top: 15px;
+}

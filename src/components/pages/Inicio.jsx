@@ -7,7 +7,7 @@ function Inicio() {
         <main className="py-5 bg-light">
             <Container>
                 <Row className="align-items-center justify-content-center">
-                    <Col md={6}>
+                    <Col md={6} >
                         <h2>Pagina principal </h2>
                         <p>
                             Pre entrega 2026 Christian Horacio Ledesma Fernandez

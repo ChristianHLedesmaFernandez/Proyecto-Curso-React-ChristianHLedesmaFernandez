@@ -3,10 +3,15 @@ import { NavLink } from "react-router-dom";
 import { Navbar, Nav, Container, Badge } from "react-bootstrap";
 import { Cart } from "react-bootstrap-icons";
 import "./NavBar.css";
+import { useCarrito } from "../../../context/CarritoContext";
 
-function NavBar() {
+function NavBar({ mostrarCarrito }) {
 
-    const cantidadCarrito = 3;
+    const { carrito } = useCarrito();
+    const cantidadCarrito = carrito.reduce((acumulador, prod) =>
+        acumulador + prod.cantidad,
+        0
+    );
 
     return (
         <Navbar bg="dark" variant="dark" expand="lg">
@@ -22,9 +27,12 @@ function NavBar() {
                         <Nav.Link as={NavLink} to={"/contacto"}>Contacto</Nav.Link>
 
                         {/* carrito */}
-                        <Nav.Link className="position-relative ms-3">
+                        <Nav.Link className="position-relative ms-3"
+                            onClick={mostrarCarrito}
+                        >
                             <div className="carrito-container">
                                 <Cart size={25} />
+                                {/* numero sobre el carrito */}
                                 <Badge
                                     pill
                                     bg="danger"
@@ -38,6 +46,7 @@ function NavBar() {
                                 </Badge>
                             </div>
                         </Nav.Link>
+
                     </Nav>
                 </Navbar.Collapse>
             </Container>
