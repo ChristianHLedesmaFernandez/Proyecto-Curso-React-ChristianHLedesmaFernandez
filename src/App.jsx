@@ -9,6 +9,9 @@ import ProductosContainer from "./components/productos/ProductosContainer";
 import ProductoDetalle from "./components/productos/ProductoDetalle";
 import Directorio from "./components/equipo/Directorio";
 
+import Dashboard from "./components/gestion/Dashboard";
+import AdminProductos from "./components/gestion/AdminProductos";
+
 function App() {
   return (
 
@@ -29,8 +32,16 @@ function App() {
           path="/contacto" element={<Contactos />}/>
 
         <Route 
-          path="/producto/:id" element={<ProductoDetalle />} />
+          path="/gestion/productos" element={<AdminProductos />} />
+          
+        <Route 
+          path="/gestion/dashboard" element={<Dashboard />} />
 
+       
+
+
+        <Route 
+          path="/producto/:id" element={<ProductoDetalle />} />
       </Route>
 
     </Routes>

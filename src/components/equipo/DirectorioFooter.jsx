@@ -10,7 +10,7 @@ function DirectorioFooter() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('data/nosotros.json')
+    fetch('/data/nosotros.json')
       //fetch('https://proyecto-nodejs-tau.vercel.app/api/productos')
       .then(res => {
         if (!res.ok) throw new Error('Error al cargar');

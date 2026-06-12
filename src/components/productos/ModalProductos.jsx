@@ -1,32 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import FormularioProducto from "./FormularioProducto";
 import { Form, Button, Modal } from "react-bootstrap";
 
 import Swal from 'sweetalert2'
 
-import { validarNombre, validarStock, validarPrecio } from "../../js/funciones.js";
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from "../../firebase/config.js"
 
-function ModalProductos() {
+import {
+    validarNombreProducto,
+    validarCategoria,
+    validarDescripcion,
+    validarStock,
+    validarPrecio
+} from "../../js/funciones.js";
+
+function ModalProductos({ productoEditar, setProductoEditar, agregarProducto }) {
+    // Para determinar si estoy Editando o Creando
+    const modoEdicion = productoEditar !== null;
+
+
     const [datosForm, setDatosForm] = useState({
         nombre: "",
+        categoria: "",
+        descripcion: "",
         stock: "",
         precio: ""
     });
+
+    useEffect(() => {
+        if (productoEditar) {
+            setDatosForm({
+                nombre: productoEditar.nombre || "",
+                descripcion: productoEditar.descripcion || "",
+                categoria: productoEditar.categoria || "",
+                stock: productoEditar.stock || "",
+                precio: productoEditar.precio || ""
+            });
+
+            setShow(true);
+        }
+
+    }, [productoEditar]);
 
     // Nuevo estado para el archivo de imagen 
     const [imagenFile, setImagenFile] = useState(null);
 
     const validadores = {
-        nombre: validarNombre,
+        nombre: validarNombreProducto,
+        categoria: validarCategoria,
+        descripcion: validarDescripcion,
         stock: validarStock,
         precio: validarPrecio
     };
     const [show, setShow] = useState(false);
     const cancelar = () => {
         setShow(false);
+        setProductoEditar(null);
         setDatosForm({
             nombre: "",
+            categoria: "",
             stock: "",
             precio: ""
         });
@@ -40,6 +74,7 @@ function ModalProductos() {
         setErrores({});
         setDatosForm({
             nombre: "",
+            categoria: "",
             stock: "",
             precio: ""
         });
@@ -51,7 +86,9 @@ function ModalProductos() {
     const [errores, setErrores] = useState({});
 
     const formValido =
-        validarNombre(datosForm.nombre) === "" &&
+        validarNombreProducto(datosForm.nombre) === "" &&
+        validarDescripcion(datosForm.descripcion) === "" &&
+        validarCategoria(datosForm.categoria) === "" &&
         validarStock(datosForm.stock) === "" &&
         validarPrecio(datosForm.precio) === "" &&
         imagenFile !== null;
@@ -101,8 +138,19 @@ function ModalProductos() {
                 const productoCompleto = {
                     ...datosForm,
                     // Agregamos la URL obtenida 
-                    urlImagen: datosImgbb.data.url
+                    imagen: datosImgbb.data.url,
+                    stock: Number(datosForm.stock),
+                    precio: Number(datosForm.precio)
                 };
+                // Guardando en Firestore
+                const productosRef = collection(db, "productos nacionales");
+                const docCreado = await addDoc(productosRef, productoCompleto);
+                // Para recargar la pagina
+                agregarProducto({
+                    ...productoCompleto,
+                    id: docCreado.id
+                });
+
                 console.log(productoCompleto);
                 Swal.fire({
                     title: "El Producto se guardo Correctamente!",
@@ -132,10 +180,10 @@ function ModalProductos() {
                     Nuevo Producto
                 </Button>
             </div >
-            < Modal show={show} onHide={cancelar} >
+            < Modal show={show} onHide={cancelar} size="lg">
                 <Form className="text-start" onSubmit={guardarProducto} noValidate>
                     <Modal.Header>
-                        <Modal.Title className="fst-italic">Nuevo Producto</Modal.Title>
+                        <Modal.Title>{modoEdicion ? "Editar Producto" : "Nuevo Producto"}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <FormularioProducto
@@ -151,7 +199,7 @@ function ModalProductos() {
                             Cancelar
                         </Button>
                         <Button variant="primary" type="submit" disabled={!formValido || loading}>
-                            {loading ? "Guardando..." : "Guardar Producto"}
+                            {loading ? "Guardando..." : modoEdicion ? "Guardar Cambios" : "Guardar Producto"}
                         </Button>
                     </Modal.Footer>
                 </Form>

@@ -52,7 +52,7 @@
     {
         "id": 5234,
         "nombre": "Silla Ergonómica",        
-        "categoria": "Gamers",
+        "categoria": "Gaming",
         "imagen": "/imagenes/sillaErgonomica.webp",
         "descripcion": "Silla ergonómica premium con soporte lumbar y ajustes múltiples para máxima comodidad.",
         "precio": 780000,
@@ -102,7 +102,7 @@
     {
         "id": 1078,
         "nombre": "Tablet Android",
-        "categoria": "Tables",
+        "categoria": "Tablets",
         "imagen": "/imagenes/tabletAndroid.webp",
         "descripcion": "Tablet Android de pantalla amplia ideal para entretenimiento, estudio y productividad.",
         "precio": 560000,

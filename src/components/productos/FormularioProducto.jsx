@@ -30,6 +30,47 @@ function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, er
 
             </Form.Group>
 
+            {/* nombre */}
+            <Form.Group className="mb-3">
+
+                <Form.Label>
+                    Categoria del Producto
+                </Form.Label>
+
+                <Form.Control
+                    type="text"
+                    name="categoria"
+                    value={datosForm.categoria}
+                    onChange={manejarCambios}
+                    placeholder="Ingrese categoria del producto"
+                    isInvalid={!!errores.categoria}
+                    isValid={datosForm.categoria && !errores.categoria}
+                />
+
+                <Form.Control.Feedback type="invalid">
+                    {errores.categoria}
+                </Form.Control.Feedback>
+
+            </Form.Group>
+            {/* Descripcion */}
+            <Form.Group className="mb-3">
+                <Form.Label>Descripción</Form.Label>
+
+                <Form.Control
+                    as="textarea"
+                    rows={5}
+                    name="descripcion"
+                    value={datosForm.descripcion}
+                    onChange={manejarCambios}
+                    style={{ resize: "none" }}
+                    isInvalid={!!errores.descripcion}
+                />
+
+                <Form.Control.Feedback type="invalid">
+                    {errores.descripcion}
+                </Form.Control.Feedback>
+            </Form.Group>
+
             {/* stock */}
             <Form.Group className="mb-3">
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Container, Row, Col, Spinner, Carousel} from 'react-bootstrap';
+import { Container, Row, Col, Spinner, Carousel } from 'react-bootstrap';
 
 import ItemList from "./ItemList";
 import ModalProductos from "./ModalProductos";
@@ -27,9 +27,15 @@ function ProductosContainer() {
             });
     }, []);
 
-    if (cargando) return <Spinner animation="border" variant="warning" />;
+    if (cargando) {
+        return (
+            <Container className="text-center py-5">
+                <Spinner animation="border" variant="warning" />
+            </Container>
+        );
+    }
 
-    if (error) return <p>Error: {error}</p>; 
+    if (error) return <p>Error: {error}</p>;
 
     return (
         <section id="productos" className="py-5">
@@ -45,7 +51,7 @@ function ProductosContainer() {
                         Conoce nuestros productos.
                     </p>
                 </div>
-                {/* Fin Titulo*/}  
+                {/* Fin Titulo*/}
                 <ModalProductos />
                 <ItemList productos={productos} />
             </Container>

@@ -1,8 +1,8 @@
 // Funciones auxiliares
-const expresiones = {  
+const expresiones = {
   nombre: /^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/,          // Solo letras, ñ, acentos, espacios
+  nombreProducto: /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s\-".()/'+]+$/,
   categoria: /^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/,       // Solo letras, ñ, acentos, espacios
-  descripcion: /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/,   // Solo letras, ñ, acentos, espacios y números
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   telefono: /^[0-9+\-\s()]+$/
 
@@ -16,6 +16,25 @@ export const validarNombre = (valor) => {
   }
   if (!expresiones.nombre.test(valor)) {
     return "Solo letras y espacios.";
+  }
+  if (texto.length > 100) {
+    return "Máximo 100 caracteres.";
+  }
+
+  return "";
+};
+// =========================
+// Nombre del Producto
+// =========================
+export const validarNombreProducto = (valor) => {
+  if (!valor.trim()) {
+    return "El nombre del Producto es obligatorio.";
+  }
+  if (!expresiones.nombreProducto.test(valor)) {
+    return "Contiene caracteres no permitidos.";
+  }
+  if (valor.length > 100) {
+    return "Máximo 100 caracteres.";
   }
   return "";
 };
@@ -57,11 +76,20 @@ export const validarMensaje = (valor) => {
 // DESCRIPCION
 // =========================
 export const validarDescripcion = (valor) => {
-  if (!valor.trim()) {
+  const texto = valor.trim();
+  if (!texto) {
     return "La descripción es obligatoria.";
   }
+  /*
   if (!expresiones.descripcion.test(valor)) {
     return "La descripción contiene caracteres inválidos.";
+  }
+    */
+  if (texto.length < 10) {
+    return "La descripción es demasiado corta.";
+  }
+  if (texto.length > 500) {
+    return "Máximo 500 caracteres.";
   }
   return "";
 };
@@ -82,20 +110,20 @@ export const validarStock = (valor) => {
 // PRECIO
 // =========================
 export const validarPrecio = (valor = "") => {
-    if (!valor.toString().trim()) {
-        return "El precio es obligatorio.";
-    }
-    const numero = Number(valor);
-    if (Number.isNaN(numero)) {
-        return "Debe ser un número.";
-    }
-    if (numero < 1) {
-        return "Debe ser positivo.";
-    }
-    if (Math.round(numero * 100) / 100 !== numero) {
-        return "Máximo dos decimales.";
-    }
-    return "";
+  if (!valor.toString().trim()) {
+    return "El precio es obligatorio.";
+  }
+  const numero = Number(valor);
+  if (Number.isNaN(numero)) {
+    return "Debe ser un número.";
+  }
+  if (numero < 1) {
+    return "Debe ser positivo.";
+  }
+  if (Math.round(numero * 100) / 100 !== numero) {
+    return "Máximo dos decimales.";
+  }
+  return "";
 };
 // =========================
 // CATEGORIA

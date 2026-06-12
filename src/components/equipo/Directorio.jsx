@@ -10,7 +10,7 @@ function Directorio() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('data/nosotros.json')
+    fetch('/data/nosotros.json')
       //fetch('https://proyecto-nodejs-tau.vercel.app/api/productos')
       .then(res => {
         if (!res.ok) throw new Error('Error al cargar');
@@ -37,38 +37,44 @@ function Directorio() {
   };
 
 
-  if (cargando) return <Spinner animation="border" variant="warning" />;
+  if (cargando) {
+    return (
+      <Container className="text-center py-5">
+        <Spinner animation="border" variant="warning" />
+      </Container>
+    );
+  }
 
   if (error) return <p>Error: {error}</p>;
 
-// Creamos los grupos antes del return
+  // Creamos los grupos antes del return
   const grupos = agruparUsuarios(usuarios, 3);
 
 
   return (
     <section id="directorio" className="py-5">
-    <Container className="mt-0">
-      {/* Comienzo Titulo*/}
-      <div className="text-center mb-4">
-        <h2 className="fw-bold display-4">Sobre <span className="text-primary">Nosotros</span></h2>
-        <div
-          className="mx-auto bg-primary"
-          style={{ width: '60px', height: '4px', borderRadius: '2px' }}
-        ></div>
-        <p className="text-black mt-1">
-          Conoce a las personas que hacen esto posible.
-        </p>
-      </div>
-      {/* Fin Titulo*/}
-      <Row>
-        {usuarios.map(user => (
-          // Col es el que define cuánto espacio ocupa cada tarjeta
-          <Col key={user.id} xs={12} md={6} lg={4}>
-            <TarjetaContacto {...user} />
-          </Col>
-        ))}
-      </Row>  
-    </Container>
+      <Container className="mt-0">
+        {/* Comienzo Titulo*/}
+        <div className="text-center mb-4">
+          <h2 className="fw-bold display-4">Sobre <span className="text-primary">Nosotros</span></h2>
+          <div
+            className="mx-auto bg-primary"
+            style={{ width: '60px', height: '4px', borderRadius: '2px' }}
+          ></div>
+          <p className="text-black mt-1">
+            Conoce a las personas que hacen esto posible.
+          </p>
+        </div>
+        {/* Fin Titulo*/}
+        <Row>
+          {usuarios.map(user => (
+            // Col es el que define cuánto espacio ocupa cada tarjeta
+            <Col key={user.id} xs={12} md={6} lg={4}>
+              <TarjetaContacto {...user} />
+            </Col>
+          ))}
+        </Row>
+      </Container>
     </section>
   );
 }
