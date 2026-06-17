@@ -5,7 +5,7 @@ import { Form, Button, Modal } from "react-bootstrap";
 
 import Swal from 'sweetalert2'
 
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, doc, addDoc, updateDoc } from 'firebase/firestore';
 import { db } from "../../firebase/config.js"
 
 import {
@@ -13,10 +13,11 @@ import {
     validarCategoria,
     validarDescripcion,
     validarStock,
+    validarDescuento,
     validarPrecio
 } from "../../js/funciones.js";
 
-function ModalProductos({ productoEditar, setProductoEditar, agregarProducto }) {
+function ModalProductos({ productoEditar, setProductoEditar, agregarProducto, actualizarProducto }) {
     // Para determinar si estoy Editando o Creando
     const modoEdicion = productoEditar !== null;
 
@@ -26,6 +27,7 @@ function ModalProductos({ productoEditar, setProductoEditar, agregarProducto }) 
         categoria: "",
         descripcion: "",
         stock: "",
+        descuento: "",
         precio: ""
     });
 
@@ -35,8 +37,9 @@ function ModalProductos({ productoEditar, setProductoEditar, agregarProducto }) 
                 nombre: productoEditar.nombre || "",
                 descripcion: productoEditar.descripcion || "",
                 categoria: productoEditar.categoria || "",
-                stock: productoEditar.stock || "",
-                precio: productoEditar.precio || ""
+                stock: productoEditar.stock  ?? "",
+                descuento: productoEditar.descuento ?? "",
+                precio: productoEditar.precio  ?? ""
             });
 
             setShow(true);
@@ -52,6 +55,7 @@ function ModalProductos({ productoEditar, setProductoEditar, agregarProducto }) 
         categoria: validarCategoria,
         descripcion: validarDescripcion,
         stock: validarStock,
+        descuento: validarDescuento,
         precio: validarPrecio
     };
     const [show, setShow] = useState(false);
@@ -60,8 +64,10 @@ function ModalProductos({ productoEditar, setProductoEditar, agregarProducto }) 
         setProductoEditar(null);
         setDatosForm({
             nombre: "",
+            descripcion: "",
             categoria: "",
             stock: "",
+            descuento: "",
             precio: ""
         });
 
@@ -74,8 +80,10 @@ function ModalProductos({ productoEditar, setProductoEditar, agregarProducto }) 
         setErrores({});
         setDatosForm({
             nombre: "",
+            descripcion: "",
             categoria: "",
             stock: "",
+            descuento: "",
             precio: ""
         });
 
@@ -91,7 +99,8 @@ function ModalProductos({ productoEditar, setProductoEditar, agregarProducto }) 
         validarCategoria(datosForm.categoria) === "" &&
         validarStock(datosForm.stock) === "" &&
         validarPrecio(datosForm.precio) === "" &&
-        imagenFile !== null;
+        validarDescuento(datosForm.descuento) === "" &&
+        (modoEdicion || imagenFile !== null);
 
     const manejarCambios = (e) => {
         const { name, value } = e.target;
@@ -112,64 +121,120 @@ function ModalProductos({ productoEditar, setProductoEditar, agregarProducto }) 
     const guardarProducto = async (e) => {
         e.preventDefault();
         setLoading(true);
-        if (!imagenFile) {
-            setLoading(false);
-            Swal.fire({
-                title: "Por favor, selecciona una imagen para el producto.",
-                icon: "error",
-                draggable: true
-            });
-            return;
-        }
-        // --- Lógica para subir la imagen a Imgbb --- 
-        const apiKey = import.meta.env.VITE_IMGBB_API_KEY;
-        const formData = new FormData();
-        formData.append('image', imagenFile);
-        try {
-            console.log("Subiendo imagen a Imgbb...");
-            const respuestaImgbb = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
-                method: 'POST',
-                body: formData,
-            });
-            const datosImgbb = await respuestaImgbb.json();
-            if (datosImgbb.success) {
-                console.log("Imagen subida con éxito. URL:", datosImgbb.data.url);
-                // Unimos la URL de la imagen con el resto de los datos del formulario 
-                const productoCompleto = {
-                    ...datosForm,
-                    // Agregamos la URL obtenida 
-                    imagen: datosImgbb.data.url,
+        if (modoEdicion) {
+            // Estoy Editando un Producto
+            try {
+                const docRef = doc(db, "productos nacionales", productoEditar.id);
+                await updateDoc(docRef, {
+                    nombre: datosForm.nombre,
+                    categoria: datosForm.categoria,
+                    descripcion: datosForm.descripcion,
                     stock: Number(datosForm.stock),
+                    descuento: datosForm.descuento === ""
+                        ? 0
+                        : Number(datosForm.descuento),
                     precio: Number(datosForm.precio)
-                };
-                // Guardando en Firestore
-                const productosRef = collection(db, "productos nacionales");
-                const docCreado = await addDoc(productosRef, productoCompleto);
-                // Para recargar la pagina
-                agregarProducto({
-                    ...productoCompleto,
-                    id: docCreado.id
                 });
 
-                console.log(productoCompleto);
+
+                const productoActualizado = {
+                    ...productoEditar,
+                    ...datosForm,
+                    stock: Number(datosForm.stock),
+                    descuento: datosForm.descuento === ""
+                        ? 0
+                        : Number(datosForm.descuento),
+                    precio: Number(datosForm.precio)
+                };
+
+                actualizarProducto(productoActualizado);
+
                 Swal.fire({
-                    title: "El Producto se guardo Correctamente!",
-                    icon: "success",
+                    title: "Producto actualizado",
+                    icon: "success"
+                });
+
+                cancelar();
+            } catch (error) {
+
+                console.error(error);
+
+                Swal.fire({
+                    title: "Error",
+                    text: "No se pudo actualizar el producto",
+                    icon: "error"
+                });
+
+            } finally {
+
+                setLoading(false);
+
+            }
+        } else {
+            // Estoy Creando un Producto
+            if (!imagenFile) {
+                setLoading(false);
+                Swal.fire({
+                    title: "Por favor, selecciona una imagen para el producto.",
+                    icon: "error",
                     draggable: true
                 });
-                cancelar();
-            } else {
-                throw new Error('La subida de la imagen a Imgbb falló.');
+                return;
             }
-        } catch (error) {
-            console.error("Hubo un error al subir la imagen. Por favor, intentá de nuevo.");
-            Swal.fire({
-                title: "Hubo un error al subir la imagen. Por favor, intentá de nuevo.",
-                icon: "error",
-                draggable: true
-            });
-        } finally {
-            setLoading(false);
+            // --- Lógica para subir la imagen a Imgbb --- 
+            const apiKey = import.meta.env.VITE_IMGBB_API_KEY;
+            const formData = new FormData();
+            formData.append('image', imagenFile);
+            try {
+                console.log("Subiendo imagen a Imgbb...");
+                const respuestaImgbb = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+                    method: 'POST',
+                    body: formData,
+                });
+                const datosImgbb = await respuestaImgbb.json();
+                if (datosImgbb.success) {
+                    console.log("Imagen subida con éxito. URL:", datosImgbb.data.url);
+                    // Unimos la URL de la imagen con el resto de los datos del formulario 
+                    const productoCompleto = {
+                        ...datosForm,
+                        // Agregamos la URL obtenida 
+                        imagen: datosImgbb.data.url,
+                        stock: Number(datosForm.stock),
+                        descuento: datosForm.descuento === ""
+                            ? 0
+                            : Number(datosForm.descuento),
+                        precio: Number(datosForm.precio)
+                    };
+                    // Guardando en Firestore
+                    const productosRef = collection(db, "productos nacionales");
+                    const docCreado = await addDoc(productosRef, productoCompleto);
+                    // Para recargar la pagina
+                    agregarProducto({
+                        ...productoCompleto,
+                        id: docCreado.id
+                    });
+                    Swal.fire({
+                        title: "El Producto se guardo Correctamente!",
+                        icon: "success",
+                        draggable: true
+                    });
+                    cancelar();
+                } else {
+                    throw new Error('La subida de la imagen a Imgbb falló.');
+                }
+            } catch (error) {
+                console.error("Hubo un error al subir la imagen. Por favor, intentá de nuevo.");
+                Swal.fire({
+                    title: "Hubo un error al subir la imagen. Por favor, intentá de nuevo.",
+                    icon: "error",
+                    draggable: true
+                });
+            } finally {
+                setLoading(false);
+            }
+
+
+
         }
     };
 

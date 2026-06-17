@@ -104,6 +104,16 @@ function AdminProductos() {
         setProductoEditar(producto);
     };
 
+    const actualizarProducto = (productoActualizado) => {
+        setProductos(prev =>
+            prev.map(prod =>
+                prod.id === productoActualizado.id
+                    ? productoActualizado
+                    : prod
+            )
+        );
+    };
+
     return (
         <section id="tablaProductos" className="py-5">
             <Container>
@@ -120,6 +130,7 @@ function AdminProductos() {
                     productoEditar={productoEditar}
                     setProductoEditar={setProductoEditar}
                     agregarProducto={agregarProducto}
+                    actualizarProducto={actualizarProducto}
                 />
                 <div className="box-body py-3">
                     {productos.length === 0 ? (
@@ -202,4 +213,3 @@ function AdminProductos() {
 };
 
 export default AdminProductos;
-

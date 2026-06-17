@@ -52,7 +52,6 @@ function ProductosContainer() {
                     </p>
                 </div>
                 {/* Fin Titulo*/}
-                <ModalProductos />
                 <ItemList productos={productos} />
             </Container>
         </section>

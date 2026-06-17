@@ -105,6 +105,21 @@ export const validarStock = (valor) => {
     return "El stock debe ser un número natural.";
   }
   return "";
+};// =========================
+// DESCUENTO
+// =========================
+export const validarDescuento = (valor) => {
+  if (valor === "" || valor === null) {
+    return "";
+  }
+  const numero = Number(valor);
+  if (Number.isNaN(numero)) {
+    return "Debe ser un número.";
+  }
+  if (numero < 0 || numero > 100) {
+    return "Debe estar entre 0 y 100.";
+  }
+  return "";
 };
 // =========================
 // PRECIO
