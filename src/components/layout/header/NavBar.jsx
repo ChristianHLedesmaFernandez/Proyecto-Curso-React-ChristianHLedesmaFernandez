@@ -60,7 +60,7 @@ function NavBar({ mostrarCarrito }) {
 
                             <Nav.Link as={NavLink} to={"/"} end>Volver a la Tienda </Nav.Link>
                             <Nav.Link as={NavLink} to={"/gestion/productos"}> Productos</Nav.Link>
-                            <Nav.Link as={NavLink} to={""}> Cupones</Nav.Link>
+                            <Nav.Link as={NavLink} to={"/gestion/cupones"}> Cupones</Nav.Link>
                             <Nav.Link as={NavLink} to={""}> Equipo</Nav.Link>
 
                         </Nav>

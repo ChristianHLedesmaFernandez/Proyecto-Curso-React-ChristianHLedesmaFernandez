@@ -11,6 +11,7 @@ import Directorio from "./components/equipo/Directorio";
 
 import Dashboard from "./components/gestion/Dashboard";
 import AdminProductos from "./components/gestion/AdminProductos";
+import AdminCupones from "./components/gestion/cupones/AdminCupones";
 
 function App() {
   return (
@@ -35,10 +36,10 @@ function App() {
           path="/gestion/productos" element={<AdminProductos />} />
           
         <Route 
-          path="/gestion/dashboard" element={<Dashboard />} />
-
-       
-
+          path="/gestion/cupones" element={<AdminCupones />} />
+          
+        <Route 
+          path="/gestion/dashboard" element={<Dashboard />} /> 
 
         <Route 
           path="/producto/:id" element={<ProductoDetalle />} />

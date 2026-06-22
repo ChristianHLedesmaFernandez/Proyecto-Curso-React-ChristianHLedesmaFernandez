@@ -4,8 +4,8 @@ const expresiones = {
   nombreProducto: /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s\-".()/'+]+$/,
   categoria: /^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/,       // Solo letras, ñ, acentos, espacios
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-  telefono: /^[0-9+\-\s()]+$/
-
+  telefono: /^[0-9+\-\s()]+$/,
+  codigoCupon: /^[A-Za-z0-9]+$/
 };
 // =========================
 // Nombre
@@ -149,6 +149,21 @@ export const validarCategoria = (valor) => {
   }
   if (!expresiones.categoria.test(valor)) {
     return "Solo letras y espacios.";
+  }
+  return "";
+};
+export const validarCodigoCupon = (valor) => {
+  if (!valor.trim()) {
+    return "El codigo es obligatorio.";
+  }
+  if (!expresiones.codigoCupon.test(valor)) {
+    return "Solo letras y números.";
+  }
+  if (valor.length < 4) {
+    return "Debe tener al menos 4 caracteres";
+  }
+  if (valor.length > 20) {
+    return "No puede superar los 20 caracteres";
   }
   return "";
 };

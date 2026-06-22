@@ -3,6 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { Container, Card, Row, Col, Spinner, Badge, Button } from 'react-bootstrap';
 
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../firebase/config.js';
+
 import { useCarrito } from "../../context/CarritoContext";
 
 const ProductoDetalle = () => {
@@ -17,28 +20,56 @@ const ProductoDetalle = () => {
     const { agregarAlCarrito } = useCarrito();
 
     useEffect(() => {
-        fetch('/data/productos.json')
-            //fetch('https://proyecto-nodejs-tau.vercel.app/api/productos') // Dessde mi API (del curso de Node JS)
-            .then(res => {
-                if (!res.ok) throw new Error('Error al cargar');
-                return res.json();
-            })
-            .then(data => {
-                const productoEncontrado = data.find(p => p.id === parseInt(id));
-                setProducto(productoEncontrado);
+        const obtenerProducto = async () => {
+            try {
+                const docRef = doc(
+                    db,
+                    "productos nacionales",
+                    id
+                );
+                const resp = await getDoc(docRef);
+
+                if (resp.exists()) {
+                    setProducto({
+                        id: resp.id,
+                        ...resp.data()
+                    });
+                } else {
+                    setProducto(null);
+                }
+            } catch (error) {
+                console.error(error);
+                setError("Error al cargar producto");
+            } finally {
                 setCargando(false);
-            })
-            .catch(err => {
-                setError(err.message);
-                setCargando(false);
-            });
+            }
+        };
+        obtenerProducto();
     }, [id]);
 
-    if (cargando) return <Spinner animation="border" variant="warning" />;
+    if (cargando) {
+            return (
+                <Container className="text-center py-5">
+                    <Spinner animation="border" variant="warning" />
+                    <p className="mt-3">Cargando productos...</p>
+                </Container>
+            );
+        }
+        if (error) {
+            return (
+                <Container className="text-center py-5">
+                    <h3>{error}</h3>
+                </Container>
+            );
+        }
+        if (!producto) {
+            return (
+                <Container className="text-center py-5">
+                    <h3>Producto no encontrado</h3>
+                </Container>
+            );
+        }
 
-    if (error) return <p>Error: {error}</p>;
-
-    if (!producto) return <p>Producto no encontrado</p>;
     return (
         <Container className="py-5">
             <div

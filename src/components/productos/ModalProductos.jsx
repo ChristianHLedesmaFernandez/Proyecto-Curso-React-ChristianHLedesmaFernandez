@@ -59,6 +59,7 @@ function ModalProductos({ productoEditar, setProductoEditar, agregarProducto, ac
         precio: validarPrecio
     };
     const [show, setShow] = useState(false);
+
     const cancelar = () => {
         setShow(false);
         setProductoEditar(null);
@@ -75,6 +76,7 @@ function ModalProductos({ productoEditar, setProductoEditar, agregarProducto, ac
         setErrores({});
 
     };
+
     const handleShow = () => {
         setShow(true);
         setErrores({});
@@ -89,7 +91,9 @@ function ModalProductos({ productoEditar, setProductoEditar, agregarProducto, ac
 
         setImagenFile(null)
     };
+
     const [loading, setLoading] = useState(false);
+    
     // Manejo de Errores
     const [errores, setErrores] = useState({});
 
@@ -247,7 +251,7 @@ function ModalProductos({ productoEditar, setProductoEditar, agregarProducto, ac
             </div >
             < Modal show={show} onHide={cancelar} size="lg">
                 <Form className="text-start" onSubmit={guardarProducto} noValidate>
-                    <Modal.Header>
+                    <Modal.Header className="bg-primary text-white">
                         <Modal.Title>{modoEdicion ? "Editar Producto" : "Nuevo Producto"}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -263,7 +267,7 @@ function ModalProductos({ productoEditar, setProductoEditar, agregarProducto, ac
                         <Button variant="secondary" onClick={cancelar}>
                             Cancelar
                         </Button>
-                        <Button variant="primary" type="submit" disabled={!formValido || loading}>
+                        <Button variant="primary" disabled={!formValido || loading}>
                             {loading ? "Guardando..." : modoEdicion ? "Guardar Cambios" : "Guardar Producto"}
                         </Button>
                     </Modal.Footer>

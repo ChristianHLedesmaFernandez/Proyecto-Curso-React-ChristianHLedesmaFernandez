@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 
 import { Container, Row, Col, Spinner, Carousel } from 'react-bootstrap';
 
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase/config.js";
+
 import TarjetaContactoFooter from './TarjetaContactoFooter';
 
 function DirectorioFooter() {
@@ -10,20 +13,27 @@ function DirectorioFooter() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/data/nosotros.json')
-      //fetch('https://proyecto-nodejs-tau.vercel.app/api/productos')
-      .then(res => {
-        if (!res.ok) throw new Error('Error al cargar');
-        return res.json();
-      })
-      .then(data => {
-        setUsuarios(data);
-        setCargando(false);
-      })
-      .catch(err => {
-        setError(err.message);
-        setCargando(false);
-      });
+    if (!navigator.onLine) {
+          setError("Sin conexión a Internet");
+          setCargando(false);
+          return;
+        }
+        const equipoDB = collection(db, "equipo");
+        getDocs(equipoDB)
+          .then((resp) => {
+            setUsuarios(
+              resp.docs.map((doc) => ({
+                ...doc.data(),
+                id: doc.id
+              }))
+            );
+            setCargando(false);
+          })
+          .catch((error) => {
+            console.error(error);
+            setError("Error al cargar equipo");
+            setCargando(false);
+          });
   }, []);
 
   // --- FUNCIÓN PARA AGRUPAR ---
@@ -36,11 +46,24 @@ function DirectorioFooter() {
     return grupos;
   };
 
-  if (cargando) return <Spinner animation="border" variant="warning" />;
+  if (cargando) {
+    return (
+      <Container className="text-center py-5">
+        <Spinner animation="border" variant="warning" />
+        <p className="mt-3">Cargando equipo...</p>
+      </Container>
+    );
+  }
 
-  if (error) return <p>Error: {error}</p>;
+  if (error) {
+    return (
+      <Container className="text-center py-5">
+        <h3>{error}</h3>
+      </Container>
+    );
+  }
 
-// Creamos los grupos antes del return
+  // Creamos los grupos antes del return
   const grupos = agruparUsuarios(usuarios, 3);
 
 
@@ -53,11 +76,11 @@ function DirectorioFooter() {
           className="mx-auto bg-primary"
           style={{ width: '60px', height: '4px', borderRadius: '2px' }}
         ></div>
-        <p className="text-white mt-1 text-white">
+        <p className="text-white mt-1">
           Conoce a las personas que hacen esto posible.
         </p>
       </div>
-      {/* Fin Titulo*/}   
+      {/* Fin Titulo*/}
       {/* Carrusel */}
       <Carousel indicators={true} controls={false} interval={5000} pause="hover">
         {grupos.map((grupo, index) => (

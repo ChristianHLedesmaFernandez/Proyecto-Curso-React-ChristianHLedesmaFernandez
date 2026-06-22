@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import { Container, Row, Col, Spinner, Carousel } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
+
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase/config.js';
 
 import ItemList from "./ItemList";
 import ModalProductos from "./ModalProductos";
@@ -9,7 +12,7 @@ function ProductosContainer() {
     const [productos, setProductos] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
-
+/*    Cargando desde un Archivo.
     useEffect(() => {
         fetch('data/productos.json')
             //fetch('https://proyecto-nodejs-tau.vercel.app/api/productos') // Dessde mi API (del curso de Node JS)
@@ -26,16 +29,46 @@ function ProductosContainer() {
                 setCargando(false);
             });
     }, []);
-
+*/
+/* Cargando desde Firestore */
+useEffect(() => {
+        if (!navigator.onLine) {
+            setError("Sin conexión a Internet");
+            setCargando(false);
+            return;
+        }
+        const productosDB = collection(db, "productos nacionales")
+        getDocs(productosDB)
+            .then((resp) => {
+                setProductos(
+                    resp.docs.map((doc) => {
+                        return { ...doc.data(), id: doc.id }
+                    })
+                )
+                setCargando(false);
+            })
+            .catch((error) => {
+                console.error(error);
+                setError("Error al cargar productos");
+                setCargando(false);
+            });
+    }, []);
+    
     if (cargando) {
         return (
             <Container className="text-center py-5">
                 <Spinner animation="border" variant="warning" />
+                <p className="mt-3">Cargando productos...</p>
             </Container>
         );
     }
-
-    if (error) return <p>Error: {error}</p>;
+    if (error) {
+        return (
+            <Container className="text-center py-5">
+                <h3>{error}</h3>
+            </Container>
+        );
+    }
 
     return (
         <section id="productos" className="py-5">

@@ -86,11 +86,14 @@ function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, er
                             type="number"
                             name="descuento"
                             value={datosForm.descuento}
-                            onChange={manejarCambios}                            
+                            onChange={manejarCambios}
                             placeholder="Ingrese descuento"
                             min="0"
                             max="100"
+                            isInvalid={!!errores.descuento}
+                            isValid={datosForm.descuento && !errores.descuento}
                         />
+
                         <Form.Control.Feedback type="invalid">
                             {errores.descuento}
                         </Form.Control.Feedback>

@@ -9,8 +9,6 @@ import { db } from "../../firebase/config.js"
 
 import ModalProductos from "../productos/ModalProductos.jsx";
 
-
-
 function AdminProductos() {
 
     // Estado para guardar los productos que traigamos de la DB 

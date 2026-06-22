@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 
 import { Container, Row, Col, Spinner, Carousel } from 'react-bootstrap';
 
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase/config.js";
+
 import TarjetaContacto from './TarjetaContacto';
 
 function Directorio() {
@@ -10,46 +13,44 @@ function Directorio() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/data/nosotros.json')
-      //fetch('https://proyecto-nodejs-tau.vercel.app/api/productos')
-      .then(res => {
-        if (!res.ok) throw new Error('Error al cargar');
-        return res.json();
-      })
-      .then(data => {
-        setUsuarios(data);
+    if (!navigator.onLine) {
+      setError("Sin conexión a Internet");
+      setCargando(false);
+      return;
+    }
+    const equipoDB = collection(db, "equipo");
+    getDocs(equipoDB)
+      .then((resp) => {
+        setUsuarios(
+          resp.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id
+          }))
+        );
         setCargando(false);
       })
-      .catch(err => {
-        setError(err.message);
+      .catch((error) => {
+        console.error(error);
+        setError("Error al cargar equipo");
         setCargando(false);
       });
   }, []);
-
-  // --- FUNCIÓN PARA AGRUPAR ---
-  // Esta función toma el array de usuarios y lo divide en grupos de a 3
-  const agruparUsuarios = (datos, tamano) => {
-    const grupos = [];
-    for (let i = 0; i < datos.length; i += tamano) {
-      grupos.push(datos.slice(i, i + tamano));
-    }
-    return grupos;
-  };
-
 
   if (cargando) {
     return (
       <Container className="text-center py-5">
         <Spinner animation="border" variant="warning" />
+        <p className="mt-3">Cargando equipo...</p>
       </Container>
     );
   }
-
-  if (error) return <p>Error: {error}</p>;
-
-  // Creamos los grupos antes del return
-  const grupos = agruparUsuarios(usuarios, 3);
-
+  if (error) {
+    return (
+      <Container className="text-center py-5">
+        <h3>{error}</h3>
+      </Container>
+    );
+  }
 
   return (
     <section id="directorio" className="py-5">
