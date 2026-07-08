@@ -1,4 +1,3 @@
-
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Cart, Trash, ArrowDown, ArrowUp } from "react-bootstrap-icons";
 import { Button } from 'react-bootstrap';

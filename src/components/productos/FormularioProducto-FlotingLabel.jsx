@@ -1,16 +1,16 @@
-import { InputGroup, Form, Row, Col } from "react-bootstrap";
+import { FloatingLabel, Form, Row, Col } from "react-bootstrap";
 
-import { Archive, ArchiveFill, Box, Boxes, BoxFill, Check, CurrencyDollar, Grid3x2GapFill, Justify, Percent } from "react-bootstrap-icons";
 
-function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, errores, preview, modoEdicion }) {
+function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, errores, preview }) {
 
     return (
         <>
             {/* nombre */}
-            <InputGroup className="mb-3">
-                <InputGroup.Text>
-                    <BoxFill />
-                </InputGroup.Text>
+            <FloatingLabel
+                controlId="floatingInput"
+                label="Nombre del Producto"
+                className="mb-3"
+            >
                 <Form.Control
                     type="text"
                     name="nombre"
@@ -22,49 +22,52 @@ function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, er
                 <Form.Control.Feedback type="invalid">
                     {errores.nombre}
                 </Form.Control.Feedback>
-            </InputGroup>
+            </FloatingLabel>
             {/* categoria */}
-            <InputGroup className="mb-3">
-                <InputGroup.Text>
-                    <Grid3x2GapFill />
-                </InputGroup.Text>
+            <FloatingLabel
+                controlId="floatingInput"
+                label="Categoria del Producto"
+                className="mb-3"
+            >
                 <Form.Control
                     type="text"
                     name="categoria"
                     value={datosForm.categoria}
                     onChange={manejarCambios}
-                    disabled={modoEdicion}
                     placeholder="Ingrese categoria del producto"
                     isInvalid={!!errores.categoria}
                     isValid={datosForm.categoria && !errores.categoria} />
                 <Form.Control.Feedback type="invalid">
                     {errores.categoria}
                 </Form.Control.Feedback>
-            </InputGroup>
+            </FloatingLabel>
             {/* Descripcion */}
-            <InputGroup className="mb-3">
-                <InputGroup.Text>
-                    <Justify />
-                </InputGroup.Text>
+            <FloatingLabel
+                controlId="floatingInput"
+                label="Descripcion del Producto"
+                className="mb-3"
+            >
                 <Form.Control
                     as="textarea"
-                    rows={5}
+                    placeholder="Leave a comment here"
+                    rows={8}
                     name="descripcion"
                     value={datosForm.descripcion}
                     onChange={manejarCambios}
-                    style={{ resize: "none" }}
+                    style={{ height: '100px' }}
                     isInvalid={!!errores.descripcion} />
                 <Form.Control.Feedback type="invalid">
                     {errores.descripcion}
                 </Form.Control.Feedback>
-            </InputGroup>
+            </FloatingLabel>
             <Row className="mb-3">
                 <Col md={4}>
                     {/* stock */}
-                    <InputGroup>
-                        <InputGroup.Text>
-                            <ArchiveFill />
-                        </InputGroup.Text>
+                    <FloatingLabel
+                        controlId="floatingInput"
+                        label="Stock"
+                        className="mb-3"
+                    >
                         <Form.Control
                             type="number"
                             name="stock"
@@ -77,15 +80,16 @@ function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, er
                         <Form.Control.Feedback type="invalid">
                             {errores.stock}
                         </Form.Control.Feedback>
-                    </InputGroup>
+                    </FloatingLabel>
 
                 </Col>
                 <Col md={4}>
                     {/* descuento */}
-                    <InputGroup>
-                        <InputGroup.Text>
-                            <Percent />
-                        </InputGroup.Text>
+                    <FloatingLabel
+                        controlId="floatingInput"
+                        label="Descuento (%)"
+                        className="mb-3"
+                    >
                         <Form.Control
                             type="number"
                             name="descuento"
@@ -101,14 +105,15 @@ function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, er
                         <Form.Control.Feedback type="invalid">
                             {errores.descuento}
                         </Form.Control.Feedback>
-                    </InputGroup>
+                    </FloatingLabel>
                 </Col>
                 <Col md={4}>
                     {/* precio */}
-                    <InputGroup>
-                        <InputGroup.Text>
-                            <CurrencyDollar />
-                        </InputGroup.Text>
+                    <FloatingLabel
+                        controlId="floatingInput"
+                        label="Precio"
+                        className="mb-3"
+                    >
                         <Form.Control
                             type="number"
                             name="precio"
@@ -121,7 +126,7 @@ function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, er
                         <Form.Control.Feedback type="invalid">
                             {errores.precio}
                         </Form.Control.Feedback>
-                    </InputGroup>
+                    </FloatingLabel>
                 </Col>
             </Row>
             {/* imagen */}

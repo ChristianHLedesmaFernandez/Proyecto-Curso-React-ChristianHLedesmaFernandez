@@ -1,6 +1,16 @@
 #carrito-container {
     overflow-y: auto;
 }
+.carrito-container {
+    position: relative;
+    display: inline-block;
+}
+
+.carrito-container:hover {
+    color: #070506 !important;
+    transform: scale(1.05);
+}
+
 .img-carrito {
     height: 50px;
     width: 50px;
@@ -106,3 +116,5 @@ hr {
     background-color: white;
     padding-top: 15px;
 }
+
+

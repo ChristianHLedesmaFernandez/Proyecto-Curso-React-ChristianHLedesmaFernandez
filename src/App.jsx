@@ -3,6 +3,8 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom'
 
 import Layout from './components/layout/Layout';
+import Login from "./components/login/Login"
+import Registro from "./components/registro/Registro";
 import Inicio from "./components/pages/Inicio";
 import Contactos from "./components/contactos/Contacto";
 import ProductosContainer from "./components/productos/ProductosContainer";
@@ -12,6 +14,7 @@ import Directorio from "./components/equipo/Directorio";
 import Dashboard from "./components/gestion/Dashboard";
 import AdminProductos from "./components/gestion/AdminProductos";
 import AdminCupones from "./components/gestion/cupones/AdminCupones";
+import ProtectedRoute from "./components/routes/ProtectedRoute";
 
 function App() {
   return (
@@ -21,28 +24,39 @@ function App() {
 
       <Route element={<Layout />}>
 
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/registro" element={<Registro />} />
+
         <Route path="/" element={<Inicio />} />
 
         <Route
-          path="/productos" element={<ProductosContainer />}/>
+          path="/productos" element={<ProductosContainer />} />
 
         <Route
-          path="/equipo" element={<Directorio />}/>
-
-        <Route
-          path="/contacto" element={<Contactos />}/>
-
-        <Route 
-          path="/gestion/productos" element={<AdminProductos />} />
-          
-        <Route 
-          path="/gestion/cupones" element={<AdminCupones />} />
-          
-        <Route 
-          path="/gestion/dashboard" element={<Dashboard />} /> 
-
-        <Route 
           path="/producto/:id" element={<ProductoDetalle />} />
+
+        <Route
+          path="/equipo" element={<Directorio />} />
+
+        <Route
+          path="/contacto" element={<Contactos />} />
+
+        <Route
+          path="/gestion/dashboard" element={ <ProtectedRoute>
+                                                <Dashboard />
+                                              </ProtectedRoute>} />
+
+        <Route
+          path="/gestion/productos" element={ <ProtectedRoute>
+                                                <AdminProductos />
+                                              </ProtectedRoute>} />
+
+        <Route
+          path="/gestion/cupones" element={ <ProtectedRoute>
+                                              <AdminCupones />
+                                            </ProtectedRoute>} />
+
       </Route>
 
     </Routes>

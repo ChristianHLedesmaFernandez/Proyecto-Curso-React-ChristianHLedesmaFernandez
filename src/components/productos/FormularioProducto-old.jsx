@@ -1,16 +1,17 @@
 import { InputGroup, Form, Row, Col } from "react-bootstrap";
 
-import { Archive, ArchiveFill, Box, Boxes, BoxFill, Check, CurrencyDollar, Grid3x2GapFill, Justify, Percent } from "react-bootstrap-icons";
+import { PCircle } from "react-bootstrap-icons";
 
-function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, errores, preview, modoEdicion }) {
+function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, errores, preview }) {
 
     return (
         <>
+
             {/* nombre */}
-            <InputGroup className="mb-3">
-                <InputGroup.Text>
-                    <BoxFill />
-                </InputGroup.Text>
+            <Form.Group className="mb-3">
+                <Form.Label>
+                    Nombre Producto
+                </Form.Label>
                 <Form.Control
                     type="text"
                     name="nombre"
@@ -22,30 +23,29 @@ function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, er
                 <Form.Control.Feedback type="invalid">
                     {errores.nombre}
                 </Form.Control.Feedback>
-            </InputGroup>
+            </Form.Group>
+
+
             {/* categoria */}
-            <InputGroup className="mb-3">
-                <InputGroup.Text>
-                    <Grid3x2GapFill />
-                </InputGroup.Text>
+            <Form.Group className="mb-3">
+                <Form.Label>
+                    Categoria del Producto
+                </Form.Label>
                 <Form.Control
                     type="text"
                     name="categoria"
                     value={datosForm.categoria}
                     onChange={manejarCambios}
-                    disabled={modoEdicion}
                     placeholder="Ingrese categoria del producto"
                     isInvalid={!!errores.categoria}
                     isValid={datosForm.categoria && !errores.categoria} />
                 <Form.Control.Feedback type="invalid">
                     {errores.categoria}
                 </Form.Control.Feedback>
-            </InputGroup>
+            </Form.Group>
             {/* Descripcion */}
-            <InputGroup className="mb-3">
-                <InputGroup.Text>
-                    <Justify />
-                </InputGroup.Text>
+            <Form.Group className="mb-3">
+                <Form.Label>Descripción</Form.Label>
                 <Form.Control
                     as="textarea"
                     rows={5}
@@ -57,14 +57,14 @@ function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, er
                 <Form.Control.Feedback type="invalid">
                     {errores.descripcion}
                 </Form.Control.Feedback>
-            </InputGroup>
-            <Row className="mb-3">
+            </Form.Group>
+            <Row>
                 <Col md={4}>
                     {/* stock */}
-                    <InputGroup>
-                        <InputGroup.Text>
-                            <ArchiveFill />
-                        </InputGroup.Text>
+                    <Form.Group className="mb-3">
+                        <Form.Label>
+                            Stock
+                        </Form.Label>
                         <Form.Control
                             type="number"
                             name="stock"
@@ -77,15 +77,12 @@ function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, er
                         <Form.Control.Feedback type="invalid">
                             {errores.stock}
                         </Form.Control.Feedback>
-                    </InputGroup>
-
+                    </Form.Group>
                 </Col>
                 <Col md={4}>
                     {/* descuento */}
-                    <InputGroup>
-                        <InputGroup.Text>
-                            <Percent />
-                        </InputGroup.Text>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Descuento (%)</Form.Label>
                         <Form.Control
                             type="number"
                             name="descuento"
@@ -101,14 +98,14 @@ function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, er
                         <Form.Control.Feedback type="invalid">
                             {errores.descuento}
                         </Form.Control.Feedback>
-                    </InputGroup>
+                    </Form.Group>
                 </Col>
                 <Col md={4}>
                     {/* precio */}
-                    <InputGroup>
-                        <InputGroup.Text>
-                            <CurrencyDollar />
-                        </InputGroup.Text>
+                    <Form.Group className="mb-3">
+                        <Form.Label>
+                            Precio
+                        </Form.Label>
                         <Form.Control
                             type="number"
                             name="precio"
@@ -121,38 +118,42 @@ function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, er
                         <Form.Control.Feedback type="invalid">
                             {errores.precio}
                         </Form.Control.Feedback>
-                    </InputGroup>
+                    </Form.Group>
                 </Col>
             </Row>
             {/* imagen */}
-            <div className="d-flex align-items-center mb-3 mt-4">
-                <hr className="flex-grow-1" />
-                <span className="px-3 text-muted small">
-                    Imagen
-                </span>
-                <hr className="flex-grow-1" />
-            </div>
             <Form.Group className="mb-3">
+                <Form.Label>
+                    Seleccionar Imagen
+                </Form.Label>
                 <Form.Control
                     type="file"
                     name="imagen"
                     onChange={manejarCambioImagen}
                     placeholder="Ingrese URL imagen"
                 />
+
+
                 {/* Vista Previa  */}
+
                 {preview && (
                     <div className="text-center mt-3">
+                        <p className="fw-semibold mb-2">
+                            Vista previa
+                        </p>
+
                         <img
                             src={preview}
                             alt="Vista previa"
-                            className="img-thumbnail shadow"
+                            className="img-fluid rounded border shadow-sm"
                             style={{
-                                maxHeight: "220px",
+                                maxHeight: "200px",
                                 objectFit: "contain"
                             }}
                         />
                     </div>
                 )}
+
             </Form.Group>
         </>
     );

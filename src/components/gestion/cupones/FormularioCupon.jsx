@@ -1,16 +1,15 @@
-import { Form, Row, Col } from "react-bootstrap";
+import { InputGroup, Form, Row, Col } from "react-bootstrap";
+
+import { Percent, UpcScan } from "react-bootstrap-icons";
 
 function FormularioCupon({ datosForm, manejarCambios, errores }) {
-
     return (
         <>
-
-
-            {/* nombre */}
-            <Form.Group className="mb-3">
-                <Form.Label>
-                    Codigo Cupon
-                </Form.Label>
+            {/* codigo */}
+            <InputGroup className="mb-3">
+                <InputGroup.Text>
+                    <UpcScan />
+                </InputGroup.Text>
                 <Form.Control
                     type="text"
                     name="codigo"
@@ -22,12 +21,13 @@ function FormularioCupon({ datosForm, manejarCambios, errores }) {
                 <Form.Control.Feedback type="invalid">
                     {errores.codigo}
                 </Form.Control.Feedback>
-            </Form.Group>
-
+            </InputGroup>
 
             {/* descuento */}
-            <Form.Group className="mb-3">
-                <Form.Label>Descuento (%)</Form.Label>
+            <InputGroup className="mb-3">
+                <InputGroup.Text>
+                    <Percent />
+                </InputGroup.Text>
                 <Form.Control
                     type="number"
                     name="descuento"
@@ -39,17 +39,12 @@ function FormularioCupon({ datosForm, manejarCambios, errores }) {
                     isInvalid={!!errores.descuento}
                     isValid={datosForm.descuento && !errores.descuento}
                 />
-
                 <Form.Control.Feedback type="invalid">
                     {errores.descuento}
                 </Form.Control.Feedback>
-            </Form.Group>
-
+            </InputGroup>
         </>
-
-
     );
-
 }
 
 export default FormularioCupon;

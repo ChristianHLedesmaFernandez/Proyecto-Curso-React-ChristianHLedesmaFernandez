@@ -1,8 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 import { Container, Row, Col, Button } from "react-bootstrap";
 
-import DestacadosContainer from "../productos/DestacadosContainer"; 
+import DestacadosContainer from "../productos/DestacadosContainer";
 
 function Inicio() {
+
+    const navigate = useNavigate();
+
     return (
         <main className="py-5 bg-light">
             <Container>
@@ -12,7 +17,12 @@ function Inicio() {
                         <p>
                             Pre entrega 2026 Christian Horacio Ledesma Fernandez
                         </p>
-                        <Button variant="primary">Ingresar</Button>
+                        <Button
+                            variant="primary"
+                            onClick={() => navigate("/login")}
+                        >
+                            Ingresar
+                        </Button>
                     </Col>
                 </Row>
 

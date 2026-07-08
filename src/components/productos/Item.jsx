@@ -111,7 +111,7 @@ function Item({ id, nombre, imagen, descripcion, precio, descuento, stock, desta
                             Agregar al Carrito
                         </Button>
                     </>
-                )};
+                )}
             </Card.Body>
         </Card>
     );

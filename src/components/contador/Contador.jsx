@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Swal from 'sweetalert2'
 import { Button } from 'react-bootstrap';
 import { ArrowDownSquare, ArrowUpSquare } from 'react-bootstrap-icons';
@@ -23,7 +22,7 @@ export function Contador({ stock, cantidad, setCantidad }) {
     const decrementar = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        if (cantidad == 0) {
+        if (cantidad <= 1) {
             Swal.fire({
                 title: `No Puede ser cero!`,
                 theme: 'Auto'

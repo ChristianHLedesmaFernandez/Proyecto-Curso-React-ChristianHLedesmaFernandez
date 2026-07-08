@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Modal } from "react-bootstrap";
 import Swal from 'sweetalert2'
+
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config.js";
-import FormularioCupon from "./FormularioCupon";
+
+import FormularioCupon from "./FormularioCupon.jsx";
 
 import {
     validarDescuento,
@@ -40,6 +42,7 @@ function ModalCupones({ agregarCupon }) {
     const [loading, setLoading] = useState(false);
     // Manejo de Errores
     const [errores, setErrores] = useState({});
+    
     const manejarCambios = (e) => {
         const { name, value } = e.target;
         setDatosForm(prev => ({
@@ -92,7 +95,6 @@ function ModalCupones({ agregarCupon }) {
         }
     };
 
-
     return (
         <>
             < div className="text-start mb-4" >
@@ -116,7 +118,9 @@ function ModalCupones({ agregarCupon }) {
                         <Button variant="secondary" onClick={cancelar}>
                             Cancelar
                         </Button>
-                        <Button variant="primary" disabled={!formValido || loading}>
+                        <Button 
+                            variant="primary" 
+                            disabled={!formValido || loading}>
                             {loading ? "Guardando..." : "Guardar Cupon"}
                         </Button>
                     </Modal.Footer>
