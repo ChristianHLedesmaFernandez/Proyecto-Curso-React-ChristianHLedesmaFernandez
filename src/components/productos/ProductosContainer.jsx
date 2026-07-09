@@ -193,18 +193,21 @@ function ProductosContainer() {
                     </div>
                     {/* Fin Titulo*/}
                     {/* Barra del Paginado */}
-                    <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center border-bottom pb-3 mb-4 gap-2">
+                    <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center border-top border-bottom py-3 mb-4 gap-2">
                         <div className="text-muted fw-semibold">
-                            {busqueda ? (
+                            {busqueda.trim() ? (
                                 // Si el usuario está usando la barra de búsqueda local
-                                `Mostrando ${productosFiltrados.length} resultados filtrados`
+                                `${productosFiltrados.length} ${productosFiltrados.length === 1
+                                    ? "producto encontrado"
+                                    : "productos encontrados"
+                                }`
                             ) : (
                                 // Si está navegando normalmente con la paginación
                                 `Mostrando ${productos.length} de ${totalProductos} productos`
                             )}
                         </div>
                         <div className="d-flex align-items-center gap-2">
-                            <span className="text-muted small">Mostrar:</span>
+                            <span className="fw-semibold small">Mostrar:</span>
                             <Form.Select
                                 value={productosPorPagina}
                                 onChange={(e) =>
