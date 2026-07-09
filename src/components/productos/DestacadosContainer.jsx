@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-
-import { Container, Row, Col, Spinner, Carousel} from 'react-bootstrap';
-
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase/config.js';
+import { Container, Row, Col, Spinner, Carousel } from 'react-bootstrap';
 import DestacadosList from "./DestacadosList";
 
 function DestacadosContainer() {
@@ -10,25 +10,31 @@ function DestacadosContainer() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch('data/productos.json')
-            //fetch('https://proyecto-nodejs-tau.vercel.app/api/productos') // Dessde mi API (del curso de Node JS)
-            .then(res => {
-                if (!res.ok) throw new Error('Error al cargar');
-                return res.json();
-            })
-            .then(data => {
-                setProductos(data);
+        if (!navigator.onLine) {
+            setError("Sin conexión a Internet");
+            setCargando(false);
+            return;
+        }
+        const productosDB = collection(db, "productos nacionales")
+        getDocs(productosDB)
+            .then((resp) => {
+                setProductos(
+                    resp.docs.map((doc) => {
+                        return { ...doc.data(), id: doc.id }
+                    })
+                )
                 setCargando(false);
             })
-            .catch(err => {
-                setError(err.message);
+            .catch((error) => {
+                console.error(error);
+                setError("Error al cargar productos");
                 setCargando(false);
             });
     }, []);
 
     if (cargando) return <Spinner animation="border" variant="warning" />;
 
-    if (error) return <p>Error: {error}</p>; 
+    if (error) return <p>Error: {error}</p>;
 
     return (
         <section id="productos" className="py-5">
@@ -44,7 +50,7 @@ function DestacadosContainer() {
                         Mira nuestros Productos destacados.
                     </p>
                 </div>
-                {/* Fin Titulo*/}              
+                {/* Fin Titulo*/}
                 <DestacadosList productos={productos} />
             </Container>
         </section>

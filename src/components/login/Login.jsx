@@ -64,7 +64,7 @@ const Login = () => {
                         {/* Fin Titulo*/}
                     </Card.Title>
 
-                    <Form className="text-start" onSubmit={iniciarSesion} noValidate>
+                    <Form className="text-start" onSubmit={iniciarSesion} >
                         <FormularioLogin
                             datosForm={datosForm}
                             manejarCambios={manejarCambios}

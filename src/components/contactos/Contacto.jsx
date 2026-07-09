@@ -5,6 +5,7 @@ import FormularioContacto from "./FormularioContacto";
 import { validarNombre, validarEmail, validarTelefono, validarMensaje } from '../../js/funciones';
 
 import Swal from 'sweetalert2'
+import { Helmet } from "react-helmet-async";
 
 
 function Contactos() {
@@ -102,36 +103,45 @@ function Contactos() {
 
 
     return (
-        <section id="contactos" className="py-5">
-            <Container className="py-5">
-                {/* Comienzo Titulo*/}
-                <div className="text-center mb-4">
-                    <h2 className="fw-bold display-4">Contactese con <span className="text-primary">Nosotros</span></h2>
-                    <div
-                        className="mx-auto bg-primary"
-                        style={{ width: '60px', height: '4px', borderRadius: '2px' }}
-                    ></div>
-                </div>
-                {/* Fin Titulo*/}
-                <Row className="justify-content-center">
-                    <Col md={8} lg={6}>
-                        <Card className="shadow-sm">
-                            <Card.Body className="p-4">
+        <>
+            <Helmet>
+                <title>Contacto | TechStore</title>
+                <meta
+                    name="description"
+                    content="Contactate con TechStore para consultas o soporte."
+                />
+            </Helmet>
+            <section id="contactos" className="py-5">
+                <Container className="py-5">
+                    {/* Comienzo Titulo*/}
+                    <div className="text-center mb-4">
+                        <h2 className="fw-bold display-4">Contactese con <span className="text-primary">Nosotros</span></h2>
+                        <div
+                            className="mx-auto bg-primary"
+                            style={{ width: '60px', height: '4px', borderRadius: '2px' }}
+                        ></div>
+                    </div>
+                    {/* Fin Titulo*/}
+                    <Row className="justify-content-center">
+                        <Col md={8} lg={6}>
+                            <Card className="shadow-sm">
+                                <Card.Body className="p-4">
 
-                                <FormularioContacto
-                                    datosForm={datosForm}
-                                    manejarCambios={manejarCambios}
-                                    manejarEnvio={manejarEnvio}
-                                    manejarBlur={manejarBlur}
-                                    errores={errores}
-                                    touched={touched}
-                                />
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                </Row>
-            </Container >
-        </section>
+                                    <FormularioContacto
+                                        datosForm={datosForm}
+                                        manejarCambios={manejarCambios}
+                                        manejarEnvio={manejarEnvio}
+                                        manejarBlur={manejarBlur}
+                                        errores={errores}
+                                        touched={touched}
+                                    />
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container >
+            </section>
+        </>
     );
 };
 

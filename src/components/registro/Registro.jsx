@@ -70,7 +70,7 @@ const Registro = () => {
                         {/* Fin Titulo*/}
                     </Card.Title>
 
-                    <Form className="text-start" onSubmit={registrarUsuario} noValidate>
+                    <Form className="text-start" onSubmit={registrarUsuario} >
                         <FormularioRegistro
                             datosForm={datosForm}
                             manejarCambios={manejarCambios}

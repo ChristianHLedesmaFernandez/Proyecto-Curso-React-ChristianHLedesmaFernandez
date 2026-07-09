@@ -4,6 +4,7 @@ import { Container, Row, Col, Spinner, Carousel } from 'react-bootstrap';
 
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/config.js";
+import { Helmet } from "react-helmet-async";
 
 import TarjetaContacto from './TarjetaContacto';
 
@@ -53,30 +54,35 @@ function Directorio() {
   }
 
   return (
-    <section id="directorio" className="py-5">
-      <Container className="mt-0">
-        {/* Comienzo Titulo*/}
-        <div className="text-center mb-4">
-          <h2 className="fw-bold display-4">Sobre <span className="text-primary">Nosotros</span></h2>
-          <div
-            className="mx-auto bg-primary"
-            style={{ width: '60px', height: '4px', borderRadius: '2px' }}
-          ></div>
-          <p className="text-black mt-1">
-            Conoce a las personas que hacen esto posible.
-          </p>
-        </div>
-        {/* Fin Titulo*/}
-        <Row>
-          {usuarios.map(user => (
-            // Col es el que define cuánto espacio ocupa cada tarjeta
-            <Col key={user.id} xs={12} md={6} lg={4}>
-              <TarjetaContacto {...user} />
-            </Col>
-          ))}
-        </Row>
-      </Container>
-    </section>
+    <>
+      <Helmet>
+        <title>Nuestro Equipo | TechStore</title>
+      </Helmet>
+      <section id="directorio" className="py-5">
+        <Container className="mt-0">
+          {/* Comienzo Titulo*/}
+          <div className="text-center mb-4">
+            <h2 className="fw-bold display-4">Sobre <span className="text-primary">Nosotros</span></h2>
+            <div
+              className="mx-auto bg-primary"
+              style={{ width: '60px', height: '4px', borderRadius: '2px' }}
+            ></div>
+            <p className="text-black mt-1">
+              Conoce a las personas que hacen esto posible.
+            </p>
+          </div>
+          {/* Fin Titulo*/}
+          <Row>
+            {usuarios.map(user => (
+              // Col es el que define cuánto espacio ocupa cada tarjeta
+              <Col key={user.id} xs={12} md={6} lg={4}>
+                <TarjetaContacto {...user} />
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </section>
+    </>
   );
 }
 

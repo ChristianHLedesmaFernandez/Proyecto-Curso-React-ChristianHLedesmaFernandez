@@ -1,5 +1,4 @@
 import { InputGroup, Form, Row, Col } from "react-bootstrap";
-
 import { Archive, ArchiveFill, Box, Boxes, BoxFill, Check, CurrencyDollar, Grid3x2GapFill, Justify, Percent } from "react-bootstrap-icons";
 
 function FormularioProducto({ datosForm, manejarCambios, manejarCambioImagen, errores, preview, modoEdicion }) {
